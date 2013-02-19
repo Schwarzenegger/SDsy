@@ -1,0 +1,465 @@
+Exemplos de Pedido de conexão
+
+Cliente envia:
+----------------
+todo: login
+user: thiago
+password: 12345
+----------------
+todo: login
+user: carlos
+password: 54321
+----------------
+
+Interface responde:
+----------------
+<?xml version="1.0" encoding="UTF-8"?>
+<answerLogin>
+	<status>0</status>
+</answerLogin>
+----------------
+<?xml version="1.0" encoding="UTF-8"?>
+<answerLogin>
+	<status>1</status>
+</answerLogin>
+----------------
+
+legenda status:
+	0 - Sucesso
+	1 - Errou usuário ou senha
+	2 - Já está logado
+	3 - Fracasso genérico
+
+################################################################################
+
+Exemplos de Desconectar
+
+Cliente envia:
+----------------
+todo: logoff
+----------------
+todo: logoff
+----------------
+
+Interface responde:
+----------------
+<?xml version="1.0" encoding="UTF-8"?>
+<answerLogoff>
+	<status>0</status>
+</answerLogoff>
+----------------
+<?xml version="1.0" encoding="UTF-8"?>
+<answerLogoff>
+	<status>1</status>	
+</answerLogoff>
+----------------
+
+legenda status:
+	0 - Sucesso
+	1 - Não está logado
+	2 - Fracasso genérico
+
+################################################################################
+
+Exemplos de Fazer download
+
+Cliente envia:
+----------------
+todo: download
+path: /documentos
+name: texto
+----------------
+todo: download
+path: /documentos
+name: texto2
+----------------
+todo: download
+path: /documentos
+name: texto3
+----------------
+
+Interface responde:
+----------------
+Stream do arquivo(/documentos/texto)
+----------------
+<?xml version="1.0" encoding="UTF-8"?>
+<answerDownload>
+	<path>/documentos</path>
+	<name>texto2</name>
+	<status>2</status>
+</answerDownload>
+----------------
+<?xml version="1.0" encoding="UTF-8"?>
+<answerDownload>
+	<path>/documentos</path>
+	<name>texto3</name>
+	<status>1</status>
+</answerDownload>
+----------------
+
+legenda status:
+	1 - Não está logado
+	2 - Arquivo não existe
+	3 - Fracasso genérico
+	
+obs.:
+    - Se não haver nenhum problema na requisicao é retornado o stream do arquivo
+    - Caso contrário, retorna um xml com o status do erro
+
+	
+################################################################################
+
+Exemplos de Upload
+
+Cliente envia:
+----------------
+todo: upload
+path: /documentos
+name: texto
+version: 4
+----------------
+todo: upload
+path: /videos
+name: videoSD
+version: 3
+----------------
+todo: upload
+path: /documentos
+name: texto
+version: 4
+----------------
+
+Interface responde:
+----------------
+<?xml version="1.0" encoding="UTF-8"?>
+<answerUpload>
+	<path>/documentos</path>
+	<name>texto</name>
+	<version>4</version>
+	<status>0</status>
+</answerUpload>
+----------------
+<?xml version="1.0" encoding="UTF-8"?>
+<answerUpload>
+	<path>/videos</path>
+	<name>videosSD</name>
+	<version>3</version>
+	<status>2</status>
+</answerUpload>
+----------------
+<?xml version="1.0" encoding="UTF-8"?>
+<answerUpload>
+	<path>/documentos</path>
+	<name>texto2</name>
+	<version>4</version>
+	<status>1</status>
+</answerUpload>
+----------------
+
+legenda status:
+	0 - Sucesso
+	1 - Não está logado
+	2 - Versão menor ou igual do que a do servidor
+	3 - Fracasso genérico
+
+################################################################################
+
+Exemplos de Listar
+
+Interface responde:
+----------------
+todo: list
+path: /documentos
+----------------
+todo: list
+path: /videos
+----------------
+
+Interface responde:
+----------------
+<?xml version="1.0" encoding="UTF-8"?>
+<answerList>
+	<path>/documentos</path>
+	<file> 
+		<name>texto</name>
+		<size>6</size>
+		<version>1</version>
+	</file>
+	<file> 
+		<name>texto2</name>
+		<size>7</size>
+		<version>256</version>
+	</file>
+	<folder>
+		<name>importantes</name>
+		<size>100000001</size>
+		<itens>45</itens>
+	</folder>
+	<status>0</status>
+</answerList>
+----------------
+<?xml version="1.0" encoding="UTF-8"?>
+<answerList>
+	<path>/videos</path>
+	<status>1</status>
+</answerList>
+----------------
+
+legenda status:
+	0 - Sucesso
+	1 - Não está logado
+	2 - Fracasso genérico
+
+################################################################################
+
+Exemplos de Mover
+
+Cliente envia:
+----------------
+todo: move
+oldPath: /videos
+oldName: video
+newPath: /videos/tutoriais
+newName: videoSD
+----------------
+todo: move
+oldPath: /documentos
+oldName: trabalho
+newPath: /documentos/importantes
+newName: trabalhosFaculdade
+----------------
+todo: move
+oldPath: /documentos
+oldName: texto
+newPath: /documentos/importantes
+newName: texto
+----------------
+
+Interface responde:
+----------------
+<?xml version="1.0" encoding="UTF-8"?>
+<answerMove>
+	<oldPath>/videos</oldPath>
+	<oldName>video</oldName>
+	<newPath>/videos/tutoriais</newPath>
+	<newName>videoSD</newName>
+	<status>0</status>
+</answerMove>
+----------------
+<?xml version="1.0" encoding="UTF-8"?>################################################################################
+<answerMove>
+	<oldPath>/documentos</oldPath>
+	<oldName>trabalhos</oldName>
+	<newPath>/documentos/importantes</newPath>
+	<newName>trabalhosFaculdade</newName>
+	<status>0</status>
+</answerMove>
+----------------
+<?xml version="1.0" encoding="UTF-8"?>
+<answerMove>
+	<oldPath>/documentos</oldPath>
+	<oldName>texto</oldName>
+	<newPath>/documentos/importantes</newPath>
+	<newName>texto</newName>
+	<status>1</status>
+</answerMove>
+----------------
+
+legenda status:
+	0 - Sucesso
+	1 - Não está logado
+	2 - Fracasso genérico
+
+################################################################################
+
+Exemplos de Deletar
+
+Cliente envia:
+----------------
+todo: delete
+path: /documentos
+name: texto
+----------------
+todo: delete
+path: /documentos
+name: importantes
+----------------
+todo: delete
+path: /documentos
+name: texto2
+----------------
+
+Interface responde:
+----------------
+<?xml version="1.0" encoding="UTF-8"?>
+<answerDelete>
+	<path>/documentos</path>
+	<name>texto</name>
+	<status>0</status>
+</answerDelete>
+----------------
+<?xml version="1.0" encoding="UTF-8"?>
+<answerDelete>
+	<path>/documentos</path>
+	<name>importantes</name>
+	<status>0</status>
+</answerDelete>
+----------------
+<?xml version="1.0" encoding="UTF-8"?>
+<answerDelete>
+	<path>/documentos</path>
+	<name>texto2</name>
+	<status>1</status>
+</answerDelete>
+----------------
+
+legenda status:
+	0 - Sucesso
+	1 - Não está logado
+	2 - Fracasso genérico
+
+################################################################################
+
+Exemplos de Criar pasta
+
+Cliente envia:
+----------------
+todo: mkdir
+path: /
+name: musicas
+----------------
+todo: mkdir
+path: /documentos
+name: legais
+----------------
+
+Interface responde:
+----------------
+<?xml version="1.0" encoding="UTF-8"?>
+<answerMkdir>
+	<path>/</path>
+	<name>musicas</name>
+	<status>0</status>
+</answerMkdir>
+----------------
+<?xml version="1.0" encoding="UTF-8"?>
+<answerMkdir>
+	<path>/documentos</path>
+	<name>legais</name>
+	<status>1</status>
+</answerMkdir>
+----------------
+
+legenda status:
+	0 - Sucesso
+	1 - Não está logado
+	2 - Fracasso genérico
+	
+################################################################################
+
+Copiar
+
+Cliente pede:
+----------------
+todo: copy
+path: /documentos
+name: texto
+copyPath: /documentos/importantes
+----------------
+todo: copy
+path: /videos
+name: videosSD
+copyPath: /videos/tutoriais
+----------------
+todo: copy
+path: /
+name: documentos
+copyPath: /videos
+----------------
+
+Interface responde:
+----------------
+<?xml version="1.0" encoding="UTF-8"?>
+<answerCopy>
+	<path>/documentos</path>
+	<name>texto</name>
+	<copyPath>/documentos/importantes</copyPath>
+	<status>0</status>
+</answerCopy>
+----------------
+<?xml version="1.0" encoding="UTF-8"?>
+<answerCopy>
+	<path>/videos</path>
+	<name>videosSD</name>
+	<copyPath>/videos/tutoriais</copyPath>
+	<status>1</status>
+</answerCopy>
+----------------
+<?xml version="1.0" encoding="UTF-8"?>
+<answerCopy>
+	<path>/</path>
+	<name>documentos</name>
+	<copyPath>/videos</copyPath>
+	<status>0</status>
+</answerCopy>
+----------------
+
+legenda status:
+	0 - Sucesso
+	1 - Não está logado
+	2 - Fracasso genérico
+
+################################################################################
+
+Exemplos de Versao arquivo
+
+Cliente pede:
+----------------
+todo: version
+path: /documentos
+name: texto
+----------------
+todo: version
+path: /videos
+name: video
+----------------
+todo: version
+path: /
+----------------
+todo: version
+path: /
+----------------
+
+Interface responde:
+----------------
+<?xml version="1.0" encoding="UTF-8"?>
+<answerVersion>
+	<path>/documentos</path>
+	<name>texto</name>
+	<version>4</version>
+	<status>0</status>
+</answerVersion>
+----------------
+<?xml version="1.0" encoding="UTF-8"?>
+<answerVersion>	
+	<path>/videos</path>
+	<name>video</name>
+	<status>1</status>
+</answerVersion>
+----------------
+<?xml version="1.0" encoding="UTF-8"?>
+<answerVersion>
+	<version>31</version>
+	<status>0</status>
+</answerVersion>
+----------------
+<?xml version="1.0" encoding="UTF-8"?>
+<answerVersion>
+	<status>1</status>
+</answerVersion>
+----------------
+
+legenda status:
+	0 - Sucesso
+	1 - Não está logado
+	2 - Fracasso genérico
